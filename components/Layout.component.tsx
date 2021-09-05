@@ -1,4 +1,4 @@
-import { View, Pressable, StyleSheet } from "react-native";
+import { View, Pressable, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { styled, baseLayout, baseColumnLayout, baseRowLayout } from "../theme";
@@ -32,7 +32,10 @@ export const Layout = {
       (debugBorders || debug) &&
       `border: solid ${StyleSheet.hairlineWidth}px purple;`}
   `,
-
+  Scroll: styled(ScrollView)`
+    ${baseLayout}
+    ${baseColumnLayout}
+  `,
   ScreenContainer: styled(SafeAreaView)`
     ${baseLayout}
     ${baseColumnLayout}
