@@ -1,9 +1,8 @@
 // credit: https://github.com/nicoglennon/ethaf/blob/main/src/apis/opensea-api.ts
 
-import React from "react";
-
-import axios from "axios";
 import { get, isNil, pick, groupBy, Dictionary } from "lodash";
+import React from "react";
+import axios from "axios";
 
 interface Asset {
   asset_contract: any;
@@ -21,7 +20,7 @@ const api = axios.create({
 const fetchAllTokens = async (
   address: string,
   offset: number
-): Promise<Array<any>> => {
+): Promise<any[]> => {
   const url = `https://api.opensea.io/api/v1/assets?owner=0x038Fe37C30A1B122382cA8De2F0eC9A4295984B1&order_direction=desc&offset=0&limit=20`;
   const data = await api.get(url);
   const erc721s = get(data, "data.assets", null);
