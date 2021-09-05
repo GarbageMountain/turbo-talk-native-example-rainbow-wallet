@@ -82,7 +82,7 @@ export const HomeScreen: React.FC = () => {
 
       {loading ? (
         <Display>Loading</Display>
-      ) : !!tokens ? (
+      ) : tokens ? (
         <Layout.Scroll>
           {projects.map((project) => {
             return (

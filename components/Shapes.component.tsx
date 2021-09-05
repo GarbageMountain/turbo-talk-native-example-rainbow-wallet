@@ -1,5 +1,5 @@
+import { styled, css } from "../theme";
 import { Layout } from "./Layout.component";
-import { styled, Size, css } from "../theme";
 
 export type CircleProps = { circleSize: number };
 
