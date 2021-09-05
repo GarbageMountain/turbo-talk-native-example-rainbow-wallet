@@ -1,8 +1,8 @@
 // credit: https://github.com/nicoglennon/ethaf/blob/main/src/apis/opensea-api.ts
 
+import axios from "axios";
 import { get, isNil, pick, groupBy, Dictionary } from "lodash";
 import React from "react";
-import axios from "axios";
 
 interface Asset {
   asset_contract: any;
