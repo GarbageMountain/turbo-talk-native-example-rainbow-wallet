@@ -6,8 +6,8 @@ import { ThemeProvider } from "styled-components";
 import { Navigation } from "./components/Navigation";
 import { useCachedResources } from "./hooks/useCachedResources";
 import { LoadingScreen } from "./screens/Loading.screen";
-import { theme } from "./theme";
 import { useDebugStore } from "./stores/debug";
+import { theme } from "./theme";
 
 export default function App() {
   const fontsLoaded = useCachedResources();

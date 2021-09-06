@@ -1,13 +1,12 @@
 import React from "react";
 import { Image, LayoutAnimation, LayoutRectangle } from "react-native";
-import { Gesture } from "../components/GestureHandler.component";
 
+import { Gesture } from "../components/GestureHandler.component";
 import { Layout } from "../components/Layout.component";
 import { Circle } from "../components/Shapes.component";
 import { Spacer } from "../components/Spacer.component";
 import { Display } from "../components/Typography.component";
 import { useNFT } from "../hooks/useNFT";
-import { neverInProd } from "../lib/neverInProd";
 import { useTheme } from "../theme";
 
 const NFTS: React.FC<{ title: string; projectUri: string; project: [] }> = (

@@ -11,9 +11,8 @@ import Animated, {
   withDecay,
 } from "react-native-reanimated";
 import { clamp } from "react-native-redash";
+
 import { useDebugStore } from "../stores/debug";
-import { Layout } from "./Layout.component";
-import { Display } from "./Typography.component";
 
 type GestureProps = {
   width: number;
