@@ -7,9 +7,11 @@ import { Navigation } from "./components/Navigation";
 import { useCachedResources } from "./hooks/useCachedResources";
 import { LoadingScreen } from "./screens/Loading.screen";
 import { theme } from "./theme";
+import { useDebugStore } from "./stores/debug";
 
 export default function App() {
   const fontsLoaded = useCachedResources();
+  const debugBorders = useDebugStore((state) => state.debugBorders);
 
   if (fontsLoaded) {
     return <LoadingScreen screen="app" />;
@@ -17,7 +19,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={{ ...theme, debugBorders }}>
         <Navigation />
       </ThemeProvider>
     </SafeAreaProvider>

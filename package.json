@@ -32,11 +32,13 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.2.0",
+    "react-native-redash": "^16.2.2",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.4.0",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.2.3",
-    "turbo-props": "^0.14.0"
+    "turbo-props": "^0.14.0",
+    "zustand": "^3.5.10"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
