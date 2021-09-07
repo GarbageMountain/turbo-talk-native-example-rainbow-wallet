@@ -9,12 +9,21 @@ import { Display } from "../components/Typography.component";
 import { useNFT } from "../hooks/useNFT";
 import { useTheme } from "../theme";
 
-const NFTS: React.FC<{ title: string; projectUri: string; project: [] }> = (
-  props
-) => {
-  const { project, title, projectUri } = props;
+import {
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from "@gorhom/bottom-sheet";
+
+const NFTS: React.FC<{
+  title: string;
+  projectUri: string;
+  project: [];
+  onPress: () => void;
+}> = (props) => {
+  const { project, title, projectUri, onPress } = props;
   const [show, setShow] = React.useState(false);
   const theme = useTheme();
+
   return (
     <>
       <Layout.PressableRow
@@ -23,6 +32,7 @@ const NFTS: React.FC<{ title: string; projectUri: string; project: [] }> = (
         align
         onPress={() => {
           LayoutAnimation.easeInEaseOut();
+          onPress();
           setShow(!show);
         }}
       >
@@ -70,9 +80,23 @@ export const HomeScreen: React.FC = () => {
     "0x038Fe37C30A1B122382cA8De2F0eC9A4295984B1"
   );
   const projects = Object.keys(tokens ?? {});
+  const [selectedNFT, setSelectedNFT] = React.useState(null);
   const [container, setContainer] = React.useState<null | LayoutRectangle>(
     null
   );
+  // ref
+  const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
+
+  // variables
+  const snapPoints = React.useMemo(() => ["100%"], []);
+
+  // callbacks
+  const handlePresentModalPress = React.useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+  const handleSheetChanges = React.useCallback((index: number) => {
+    console.log("handleSheetChanges", index);
+  }, []);
 
   return (
     <Layout.ScreenContainer bg="white" grow>
@@ -94,6 +118,7 @@ export const HomeScreen: React.FC = () => {
               return (
                 <Layout.Column key={project}>
                   <NFTS
+                    onPress={handlePresentModalPress}
                     projectUri={tokens[project][0].asset_contract.image_url}
                     title={project}
                     project={tokens[project]}
@@ -103,6 +128,13 @@ export const HomeScreen: React.FC = () => {
             })}
           </Layout.Scroll>
         ) : null}
+
+        <BottomSheetModal ref={bottomSheetModalRef} snapPoints={snapPoints}>
+          <Layout.Row>
+            <Display>Hello World</Display>
+            <Spacer.Horizontal />
+          </Layout.Row>
+        </BottomSheetModal>
       </Layout.Column>
     </Layout.ScreenContainer>
   );
