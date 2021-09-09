@@ -1,5 +1,10 @@
 import React from "react";
-import { Image, LayoutAnimation, LayoutRectangle } from "react-native";
+import {
+  Image,
+  LayoutAnimation,
+  LayoutRectangle,
+  Dimensions,
+} from "react-native";
 
 import { Gesture } from "../components/GestureHandler.component";
 import { Layout } from "../components/Layout.component";
@@ -9,19 +14,18 @@ import { Display } from "../components/Typography.component";
 import { useNFT } from "../hooks/useNFT";
 import { useTheme } from "../theme";
 
-import {
-  BottomSheetModal,
-  BottomSheetModalProvider,
-} from "@gorhom/bottom-sheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import { Dictionary } from "lodash";
 
 const NFTS: React.FC<{
   title: string;
   projectUri: string;
   project: [];
-  onPress: () => void;
+  onPress: (nft: Dictionary<any>) => void;
 }> = (props) => {
   const { project, title, projectUri, onPress } = props;
   const [show, setShow] = React.useState(false);
+
   const theme = useTheme();
 
   return (
@@ -32,7 +36,7 @@ const NFTS: React.FC<{
         align
         onPress={() => {
           LayoutAnimation.easeInEaseOut();
-          onPress();
+
           setShow(!show);
         }}
       >
@@ -55,18 +59,17 @@ const NFTS: React.FC<{
       </Layout.PressableRow>
       <Layout.Row>
         {show
-          ? project.map((nft: unknown, idx: number) => {
+          ? project.map((nft: Dictionary<any>, idx: number) => {
               return (
-                <Layout.Row px key={idx}>
+                <Layout.PressableRow onPress={() => onPress(nft)} px key={idx}>
                   <Image
                     source={{
-                      // @ts-expect-error
                       uri: nft.image_url,
                     }}
-                    style={{ height: 100, width: 100, borderRadius: 20 }}
+                    style={{ height: 150, width: 150, borderRadius: 20 }}
                   />
                   <Spacer.Horizontal />
-                </Layout.Row>
+                </Layout.PressableRow>
               );
             })
           : null}
@@ -79,8 +82,12 @@ export const HomeScreen: React.FC = () => {
   const { loading, tokens } = useNFT(
     "0x038Fe37C30A1B122382cA8De2F0eC9A4295984B1"
   );
+
   const projects = Object.keys(tokens ?? {});
-  const [selectedNFT, setSelectedNFT] = React.useState(null);
+  const [selectedNFT, setSelectedNFT] = React.useState<Dictionary<any>>({});
+  const { width } = Dimensions.get("screen");
+  const theme = useTheme();
+  console.log(width);
   const [container, setContainer] = React.useState<null | LayoutRectangle>(
     null
   );
@@ -88,10 +95,11 @@ export const HomeScreen: React.FC = () => {
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = React.useMemo(() => ["100%"], []);
+  const snapPoints = React.useMemo(() => ["95%"], []);
 
   // callbacks
-  const handlePresentModalPress = React.useCallback(() => {
+  const handlePresentModalPress = React.useCallback((nft: Dictionary<any>) => {
+    setSelectedNFT(nft);
     bottomSheetModalRef.current?.present();
   }, []);
   const handleSheetChanges = React.useCallback((index: number) => {
@@ -130,10 +138,51 @@ export const HomeScreen: React.FC = () => {
         ) : null}
 
         <BottomSheetModal ref={bottomSheetModalRef} snapPoints={snapPoints}>
-          <Layout.Row>
-            <Display>Hello World</Display>
-            <Spacer.Horizontal />
-          </Layout.Row>
+          <Layout.ScreenContainer>
+            <Layout.Column px="s-10" center>
+              <Layout.Row>
+                <Display weight="bold" size="l-24" py>
+                  {selectedNFT?.asset_contract?.name ?? ""}
+                </Display>
+                <Spacer.Flex />
+              </Layout.Row>
+              <Image
+                source={{ uri: selectedNFT.image_url }}
+                style={{
+                  height: 250,
+                  width: width - theme.sizes["s-10"] * 2,
+                  borderRadius: 20,
+                  resizeMode: "contain",
+                }}
+              />
+              <Display size="s-10" color="grey" center py>
+                {selectedNFT?.asset_contract?.description ?? ""}
+              </Display>
+              <Layout.Row
+                px
+                py
+                justify="space-between"
+                style={{ flexWrap: "wrap" }}
+              >
+                {selectedNFT?.traits?.map((trait: unknown) => {
+                  return (
+                    <Layout.Column py="s-10">
+                      <Layout.Column
+                        border={[1, "solid", "grey"]}
+                        radius="m-18"
+                        py
+                        px="s-10"
+                        center
+                        key={trait.value}
+                      >
+                        <Display size="s-10">{trait?.value ?? ""}</Display>
+                      </Layout.Column>
+                    </Layout.Column>
+                  );
+                }) ?? []}
+              </Layout.Row>
+            </Layout.Column>
+          </Layout.ScreenContainer>
         </BottomSheetModal>
       </Layout.Column>
     </Layout.ScreenContainer>
