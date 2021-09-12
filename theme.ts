@@ -19,6 +19,7 @@ export const {
       buttonBlue: "blue",
       text: "#262626",
       white: "#ffffff",
+      shadow: "#2224",
     },
     sizes: {
       "s-10": 12,
@@ -51,12 +52,12 @@ export const {
     weight: "regular",
     // This is a not great default
     shadow: {
-      color: "text",
+      color: "shadow",
       offset: {
-        width: 0,
-        height: 5,
+        width: 4,
+        height: 0,
       },
-      radius: 6.27,
+      radius: 4,
       elevation: 10,
     },
     sizes: {
