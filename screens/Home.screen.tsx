@@ -84,7 +84,7 @@ const { width } = Dimensions.get("screen");
 
 export const HomeScreen: React.FC = () => {
   const { setTokens, tokens } = useTokenStore();
-  const { loading, tokens: fetchedTokens } = useNFT(
+  const { tokens: fetchedTokens } = useNFT(
     "0x038Fe37C30A1B122382cA8De2F0eC9A4295984B1"
   );
   React.useEffect(() => {
@@ -111,9 +111,9 @@ export const HomeScreen: React.FC = () => {
     setSelectedNFT(nft);
     bottomSheetModalRef.current?.present();
   }, []);
-  const handleSheetChanges = React.useCallback((index: number) => {
-    console.log("handleSheetChanges", index);
-  }, []);
+  // const handleSheetChanges = React.useCallback((index: number) => {
+  //   console.log("handleSheetChanges", index);
+  // }, []);
 
   return (
     <Layout.ScreenContainer bg="white" grow>
