@@ -17,24 +17,26 @@ const api = axios.create({
   timeout: 20000, // 20 secs
 });
 
-const fetchAllTokens = async (
-  address: string,
-  offset: number
-): Promise<any[]> => {
+const fetchAllTokens = async (address: string, offset: number) => {
   const url = `https://api.opensea.io/api/v1/assets?owner=0x038Fe37C30A1B122382cA8De2F0eC9A4295984B1&order_direction=desc&offset=0&limit=20`;
-  const data = await api.get(url);
-  const erc721s = get(data, "data.assets", null);
-  if (erc721s === null) {
-    return [];
-  }
-  if (erc721s.length < 50) {
-    return erc721s;
-  }
-  if (erc721s.length === 50) {
-    const restOfErc721s = await fetchAllTokens(address, offset + 50);
-    return [...erc721s, ...restOfErc721s];
-  } else {
-    throw Error("opensea call issue");
+
+  try {
+    const data = await api.get(url);
+    const erc721s = get(data, "data.assets", null);
+    if (erc721s === null) {
+      return [];
+    }
+    if (erc721s.length < 50) {
+      return erc721s;
+    }
+    if (erc721s.length === 50) {
+      const restOfErc721s: any = await fetchAllTokens(address, offset + 50);
+      return [...erc721s, ...restOfErc721s];
+    } else {
+      throw Error("opensea call issue");
+    }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -43,8 +45,7 @@ export const apiGetAccountUniqueTokens = async (address: string) => {
     const tokens = await fetchAllTokens(address, 0);
     return parseAccountUniqueTokens(tokens);
   } catch (error) {
-    console.error("Error getting unique tokens", error);
-    throw error;
+    console.log("Error getting unique tokens", error);
   }
 };
 
@@ -94,18 +95,16 @@ export function useNFT(address: string) {
   const [error, setError] = React.useState<null | Error>(null);
   const [tokens, setTokens] = React.useState<null | Dictionary<any>>(null);
 
-  async function getTokens() {
-    try {
-      const tokens = await apiGetAccountUniqueTokens(address);
-      setTokens(tokens);
-      setLoading(false);
-    } catch (error) {
-      setError(error);
-    }
-  }
-
   React.useEffect(() => {
-    getTokens();
+    (async () => {
+      try {
+        const fetchedData = await apiGetAccountUniqueTokens(address);
+        setTokens(fetchedData ?? {});
+        setLoading(false);
+      } catch (error) {
+        setError(error as Error);
+      }
+    })();
   }, []);
 
   return { loading, tokens, error };
