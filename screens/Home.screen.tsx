@@ -10,10 +10,11 @@ import {
 } from "react-native";
 
 import { Gesture } from "../components/GestureHandler.component";
+import { EntypoIcon } from "../components/Icon";
 import { Layout } from "../components/Layout.component";
 import { Circle } from "../components/Shapes.component";
 import { Spacer } from "../components/Spacer.component";
-import { Display } from "../components/Typography.component";
+import { Quicksand } from "../components/Typography.component";
 import { useNFT } from "../hooks/useNFT";
 import { useTokenStore } from "../stores/token.store";
 import { useTheme } from "../theme";
@@ -40,6 +41,7 @@ const NFTS: React.FC<{
 
           setShow(!show);
         }}
+        debug
       >
         <Circle circleSize={theme.sizes["xl-28"]} shadow bg="white">
           <Circle circleSize={theme.sizes["xl-28"]}>
@@ -56,27 +58,28 @@ const NFTS: React.FC<{
         </Circle>
         <Spacer.Horizontal size="s-10" />
 
-        <Display>{title}</Display>
+        <Quicksand>{title}</Quicksand>
         <Spacer.Flex />
-        <Display>{project.length}</Display>
+        <Quicksand>{project.length}</Quicksand>
+        <EntypoIcon name="chevron-small-right" size={24} />
       </Layout.PressableRow>
-      <Layout.Row>
-        {show
-          ? project.map((nft: Dictionary<any>, idx: number) => {
-              return (
-                <Layout.PressableRow onPress={() => onPress(nft)} px key={idx}>
-                  <Image
-                    source={{
-                      uri: nft.image_url,
-                    }}
-                    style={{ height: 150, width: 150, borderRadius: 20 }}
-                  />
-                  <Spacer.Horizontal />
-                </Layout.PressableRow>
-              );
-            })
-          : null}
-      </Layout.Row>
+      {show ? (
+        <Layout.Row>
+          {project.map((nft: Dictionary<any>, idx: number) => {
+            return (
+              <Layout.PressableRow onPress={() => onPress(nft)} px key={idx}>
+                <Image
+                  source={{
+                    uri: nft.image_url,
+                  }}
+                  style={{ height: 150, width: 150, borderRadius: 20 }}
+                />
+                <Spacer.Horizontal />
+              </Layout.PressableRow>
+            );
+          })}
+        </Layout.Row>
+      ) : null}
     </>
   );
 };
@@ -121,9 +124,9 @@ export const HomeScreen: React.FC = () => {
         grow
         onLayout={({ nativeEvent: { layout } }) => setContainer(layout)}
       >
-        <Display px color="grey" size="xl-28">
+        <Quicksand px color="grey" size="xl-28">
           Collectables
-        </Display>
+        </Quicksand>
         {container && (
           <Gesture width={container.width} height={container.height} />
         )}
@@ -131,14 +134,13 @@ export const HomeScreen: React.FC = () => {
           <Layout.Scroll>
             {projects.sort().map((project) => {
               return (
-                <Layout.Column key={project}>
-                  <NFTS
-                    onPress={handlePresentModalPress}
-                    projectUri={tokens[project][0].asset_contract.image_url}
-                    title={project}
-                    project={tokens[project]}
-                  />
-                </Layout.Column>
+                <NFTS
+                  key={project}
+                  onPress={handlePresentModalPress}
+                  projectUri={tokens[project][0].asset_contract.image_url}
+                  title={project}
+                  project={tokens[project]}
+                />
               );
             })}
           </Layout.Scroll>
@@ -162,9 +164,9 @@ const Details: React.FC<{ selectedNFT: any }> = (props) => {
   return (
     <Layout.Column px="s-10" center>
       <Layout.Row>
-        <Display weight="bold" size="l-24" py>
+        <Quicksand weight="bold" size="l-24" py>
           {selectedNFT?.asset_contract?.name ?? ""}
-        </Display>
+        </Quicksand>
         <Spacer.Flex />
       </Layout.Row>
       <Image
@@ -176,9 +178,9 @@ const Details: React.FC<{ selectedNFT: any }> = (props) => {
           resizeMode: "contain",
         }}
       />
-      <Display size="s-10" color="grey" center py>
+      <Quicksand size="s-10" color="grey" center py>
         {selectedNFT?.asset_contract?.description ?? ""}
-      </Display>
+      </Quicksand>
       <Layout.Row px py justify="space-between" style={{ flexWrap: "wrap" }}>
         {selectedNFT?.traits?.map((trait: any, index: number) => {
           return (
@@ -191,7 +193,7 @@ const Details: React.FC<{ selectedNFT: any }> = (props) => {
                 center
                 key={trait.value}
               >
-                <Display size="s-10">{trait?.value ?? ""}</Display>
+                <Quicksand size="s-10">{trait?.value ?? ""}</Quicksand>
               </Layout.Column>
             </Layout.Column>
           );

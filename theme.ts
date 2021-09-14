@@ -39,6 +39,11 @@ export const {
         regular: "RobotoSlab_500Medium",
         bold: "RobotoSlab_700Bold",
       },
+      quicksand: {
+        light: "Quicksand_300Light",
+        regular: "Quicksand_400Regular",
+        bold: "Quicksand_700Bold",
+      },
     },
     grid: 8,
     debugBorders: false,

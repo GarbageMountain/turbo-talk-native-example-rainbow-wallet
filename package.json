@@ -15,6 +15,7 @@
     "@expo-google-fonts/inter": "^0.1.0",
     "@expo-google-fonts/lobster": "^0.1.0",
     "@expo-google-fonts/open-sans": "^0.1.0",
+    "@expo-google-fonts/quicksand": "^0.2.0",
     "@expo-google-fonts/roboto-slab": "^0.1.0",
     "@gorhom/bottom-sheet": "^4",
     "@react-native-async-storage/async-storage": "^1.15.7",
