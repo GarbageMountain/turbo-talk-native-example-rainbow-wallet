@@ -41,7 +41,6 @@ const NFTS: React.FC<{
 
           setShow(!show);
         }}
-        debug
       >
         <Circle circleSize={theme.sizes["xl-28"]} shadow bg="white">
           <Circle circleSize={theme.sizes["xl-28"]}>

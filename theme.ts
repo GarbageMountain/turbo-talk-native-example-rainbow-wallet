@@ -12,6 +12,7 @@ export const {
   baseTypography,
   spacer,
   divider,
+  debug,
 } = TurboProps(
   {
     colors: {
