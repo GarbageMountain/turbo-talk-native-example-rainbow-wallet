@@ -13,27 +13,27 @@ export const Layout = {
   Row: styled(View)`
     ${baseLayout}
     ${baseRowLayout}
-    ${debug("red")}
+    ${debug()("red")}
   `,
   PressableRow: styled(Pressable)`
     ${baseLayout}
     ${baseRowLayout}
-    ${debug("blue")}
+    ${debug()("blue")}
   `,
   Column: styled(View)`
     ${baseLayout}
     ${baseColumnLayout}
-    ${debug("green")}
+    ${debug()("green")}
   `,
   PressableColumn: styled(Pressable)`
     ${baseLayout}
     ${baseColumnLayout}
-    ${debug("purple")}
+    ${debug()("purple")}
   `,
   Scroll: styled(ScrollView)`
     ${baseLayout}
     ${baseColumnLayout}
-    ${debug("yellow")}
+    ${debug()("yellow")}
   `,
   ScreenContainer: styled(SafeAreaView)`
     ${baseLayout}
