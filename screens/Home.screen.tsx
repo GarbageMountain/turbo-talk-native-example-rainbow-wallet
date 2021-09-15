@@ -66,14 +66,17 @@ const NFTS: React.FC<{
         <Layout.Row>
           {project.map((nft: Dictionary<any>, idx: number) => {
             return (
-              <Layout.PressableRow onPress={() => onPress(nft)} px key={idx}>
+              <Layout.PressableRow
+                onPress={() => onPress(nft)}
+                px="s-10"
+                key={idx}
+              >
                 <Image
                   source={{
                     uri: nft.image_url,
                   }}
                   style={{ height: 150, width: 150, borderRadius: 20 }}
                 />
-                <Spacer.Horizontal />
               </Layout.PressableRow>
             );
           })}
@@ -106,7 +109,7 @@ export const HomeScreen: React.FC = () => {
   const bottomSheetModalRef = React.useRef<BottomSheetModal>(null);
 
   // variables
-  const snapPoints = React.useMemo(() => ["70%"], []);
+  const snapPoints = React.useMemo(() => ["95%"], []);
 
   // callbacks
   const handlePresentModalPress = React.useCallback((nft: Dictionary<any>) => {
@@ -127,7 +130,7 @@ export const HomeScreen: React.FC = () => {
           Collectables
         </Quicksand>
         {container && (
-          <Gesture width={container.width} height={container.height} />
+          <Gesture width={container.width - 50} height={container.height} />
         )}
         {tokens ? (
           <Layout.Scroll>
@@ -160,9 +163,9 @@ const Details: React.FC<{ selectedNFT: any }> = (props) => {
   const { selectedNFT } = props;
   return (
     <>
-      <Layout.Column px="s-10" center>
+      <Layout.Column px="s-10">
         <Layout.Row>
-          <Quicksand weight="bold" size="l-24" py>
+          <Quicksand textAlign="left" weight="bold" size="l-24" py>
             {selectedNFT?.asset_contract?.name ?? ""}
           </Quicksand>
         </Layout.Row>
@@ -178,10 +181,13 @@ const Details: React.FC<{ selectedNFT: any }> = (props) => {
             resizeMode: "contain",
           }}
         />
-        <Quicksand size="s-10" color="grey" center py>
+        <Quicksand weight="bold" size="l-24">
+          Description
+        </Quicksand>
+        <Quicksand size="s-10" color="grey" center px py>
           {selectedNFT?.asset_contract?.description ?? ""}
         </Quicksand>
-        <Layout.Row px py style={{ flexWrap: "wrap" }}>
+        <Layout.Row style={{ flexWrap: "wrap" }}>
           {selectedNFT?.traits?.map((trait: any, index: number) => {
             return (
               <React.Fragment key={`trait-${index}`}>
