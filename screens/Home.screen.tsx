@@ -1,4 +1,8 @@
-import { BottomSheetModal, BottomSheetBackdrop } from "@gorhom/bottom-sheet";
+import {
+  BottomSheetModal,
+  BottomSheetBackdrop,
+  BottomSheetScrollView,
+} from "@gorhom/bottom-sheet";
 import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
 import { Dictionary } from "lodash";
 import React from "react";
@@ -9,6 +13,7 @@ import {
   Dimensions,
 } from "react-native";
 
+import { DefaultBottomSheetBackdrop } from "../components/DefaultBottomSheetBackdrop.component";
 import { Gesture } from "../components/GestureHandler.component";
 import { EntypoIcon } from "../components/Icon";
 import { Layout } from "../components/Layout.component";
@@ -158,53 +163,51 @@ export const HomeScreen: React.FC = () => {
 
 const Details: React.FC<{ selectedNFT: any }> = (props) => {
   const { selectedNFT } = props;
-  const theme = useTheme();
   return (
-    <Layout.Column px="s-10" center>
-      <Layout.Row>
-        <Quicksand weight="bold" size="l-24" py>
-          {selectedNFT?.asset_contract?.name ?? ""}
+    <>
+      <Layout.Column px="s-10" center>
+        <Layout.Row>
+          <Quicksand weight="bold" size="l-24" py>
+            {selectedNFT?.asset_contract?.name ?? ""}
+          </Quicksand>
+        </Layout.Row>
+      </Layout.Column>
+      <BottomSheetScrollView>
+        <Image
+          source={{ uri: selectedNFT.image_url }}
+          style={{
+            height: 250,
+            width: width - 20,
+            overflow: "hidden",
+            borderRadius: 20,
+            resizeMode: "contain",
+          }}
+        />
+        <Quicksand size="s-10" color="grey" center py>
+          {selectedNFT?.asset_contract?.description ?? ""}
         </Quicksand>
-        <Spacer.Flex />
-      </Layout.Row>
-      <Image
-        source={{ uri: selectedNFT.image_url }}
-        style={{
-          height: 250,
-          width: width - theme.sizes["s-10"] * 2,
-          borderRadius: 20,
-          resizeMode: "contain",
-        }}
-      />
-      <Quicksand size="s-10" color="grey" center py>
-        {selectedNFT?.asset_contract?.description ?? ""}
-      </Quicksand>
-      <Layout.Row px py justify="space-between" style={{ flexWrap: "wrap" }}>
-        {selectedNFT?.traits?.map((trait: any, index: number) => {
-          return (
-            <Layout.Column key={`trait-${index}`} py="s-10">
-              <Layout.Column
-                border={[1, "solid", "grey"]}
-                radius="m-18"
-                py
-                px="s-10"
-                center
-                key={trait.value}
-              >
-                <Quicksand size="s-10">{trait?.value ?? ""}</Quicksand>
-              </Layout.Column>
-            </Layout.Column>
-          );
-        }) ?? []}
-      </Layout.Row>
-    </Layout.Column>
-  );
-};
-
-export const DefaultBottomSheetBackdrop = (
-  props: BottomSheetDefaultBackdropProps
-) => {
-  return (
-    <BottomSheetBackdrop disappearsOnIndex={-1} appearsOnIndex={0} {...props} />
+        <Layout.Row px py style={{ flexWrap: "wrap" }}>
+          {selectedNFT?.traits?.map((trait: any, index: number) => {
+            return (
+              <React.Fragment key={`trait-${index}`}>
+                <Layout.Column py={4}>
+                  <Layout.Column
+                    border={[1, "solid", "grey"]}
+                    radius="m-18"
+                    py={4}
+                    px="s-10"
+                    center
+                    key={trait.value}
+                  >
+                    <Quicksand size="s-10">{trait?.value ?? ""}</Quicksand>
+                  </Layout.Column>
+                </Layout.Column>
+                <Spacer.Horizontal />
+              </React.Fragment>
+            );
+          }) ?? []}
+        </Layout.Row>
+      </BottomSheetScrollView>
+    </>
   );
 };
