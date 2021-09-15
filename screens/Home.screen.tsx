@@ -1,9 +1,4 @@
-import {
-  BottomSheetModal,
-  BottomSheetBackdrop,
-  BottomSheetScrollView,
-} from "@gorhom/bottom-sheet";
-import { BottomSheetDefaultBackdropProps } from "@gorhom/bottom-sheet/lib/typescript/components/bottomSheetBackdrop/types";
+import { BottomSheetModal, BottomSheetScrollView } from "@gorhom/bottom-sheet";
 import { Dictionary } from "lodash";
 import React from "react";
 import {
