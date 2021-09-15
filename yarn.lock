@@ -7267,10 +7267,10 @@ tsutils@^3.21.0:
   dependencies:
     tslib "^1.8.1"
 
-turbo-props@^0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/turbo-props/-/turbo-props-0.16.0.tgz#038d2768b81b98c3b03d753a7a07c4a7dbb66ea9"
-  integrity sha512-wGxq822ze0TE8pBWkpqbbq1mrymvqcMXeH5v8ruzKS0PTp4k9ue1mOIQgwuxOPc3ZMgfM5LeBZChid79VEqgww==
+turbo-props@^0.16.1:
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/turbo-props/-/turbo-props-0.16.1.tgz#ae0be2d5f511872ae1d668755b0fe710af15ed07"
+  integrity sha512-4oL70sMhs6qkhgInn8ADNBDBJNpyy2ACxq7Ep/7vuejn140D09aHcz+eZ5u0T/FmJaI6PlWgzFU9peuEW6Bneg==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"

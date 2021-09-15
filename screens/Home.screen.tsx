@@ -144,7 +144,6 @@ export const HomeScreen: React.FC = () => {
             })}
           </Layout.Scroll>
         ) : null}
-
         <BottomSheetModal
           ref={bottomSheetModalRef}
           snapPoints={snapPoints}
